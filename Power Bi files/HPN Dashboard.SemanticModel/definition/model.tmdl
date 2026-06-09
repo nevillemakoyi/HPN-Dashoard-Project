@@ -1,0 +1,27 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["FactTable_Transaction","FactTable_Returns","FactTable_Product Cost"]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table FactTable_Transaction
+ref table DateTableTemplate_7b2e18b9-1b7a-4dc3-baa6-631e41583eab
+ref table LocalDateTable_1ed1a33c-bb1b-487b-8150-b56563c23a73
+ref table LocalDateTable_87db58a6-f66b-4a0a-9010-5ca0afe2c3dd
+ref table LocalDateTable_49844c98-bce2-4cc8-8030-1d4313424475
+ref table FactTable_Returns
+ref table LocalDateTable_7d4854ae-aecc-4597-a4a1-06c8a7290588
+ref table LocalDateTable_63f470bd-71e1-491f-b06b-a1dc8e0d3bc7
+ref table 'FactTable_Product Cost'
+ref table LocalDateTable_761d57e4-031b-4f6a-9e35-9c5ea88debf1
+
+ref cultureInfo en-US
+

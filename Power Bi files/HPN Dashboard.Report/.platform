@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "HPN Dashboard"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "6312cb03-0316-484b-ac01-e74cd85c614b"
+  }
+}

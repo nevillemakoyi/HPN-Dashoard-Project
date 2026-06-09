@@ -1,0 +1,175 @@
+table FactTable_Transaction
+	lineageTag: ab76b099-9115-4ecd-bd95-bfb5f12059dd
+
+	column SalesDetailsKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 04ecb5c7-5508-43f1-8721-f89e5df13a35
+		summarizeBy: count
+		sourceColumn: SalesDetailsKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column SalesHeaderKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 93843a96-04d7-42cc-94ab-49ee688864a4
+		summarizeBy: count
+		sourceColumn: SalesHeaderKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column SalesOrderNumber
+		dataType: string
+		lineageTag: e1ce4ee5-b025-4102-b440-2d020ac6d7be
+		summarizeBy: none
+		sourceColumn: SalesOrderNumber
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProductKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 04f44405-1639-4ed0-ab9f-d0c1634c0bba
+		summarizeBy: count
+		sourceColumn: ProductKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProductSubcategoryKey
+		dataType: int64
+		formatString: 0
+		lineageTag: ab993d7f-138f-4320-8044-6f87a4683552
+		summarizeBy: count
+		sourceColumn: ProductSubcategoryKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column OrderQuantity
+		dataType: int64
+		formatString: 0
+		lineageTag: da08887b-063a-4c53-850c-1afe28e7745e
+		summarizeBy: sum
+		sourceColumn: OrderQuantity
+
+		annotation SummarizationSetBy = Automatic
+
+	column UnitPrice
+		dataType: double
+		lineageTag: ace19615-2e3e-456b-8684-1372aa7240f6
+		summarizeBy: sum
+		sourceColumn: UnitPrice
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ExtendedAmount
+		dataType: double
+		lineageTag: f75639f7-f41c-442f-91b5-a148c2ed8d12
+		summarizeBy: sum
+		sourceColumn: ExtendedAmount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column OrderDate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 3aced651-887f-4a56-b7cc-77ec3d63af9f
+		summarizeBy: none
+		sourceColumn: OrderDate
+
+		variation Variation
+			isDefault
+			relationship: 94db8e71-1d4f-49d2-bf79-45ac30c74160
+			defaultHierarchy: LocalDateTable_1ed1a33c-bb1b-487b-8150-b56563c23a73.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column DueDate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: bfd1c5e5-d400-4c10-a077-e237cca929b9
+		summarizeBy: none
+		sourceColumn: DueDate
+
+		variation Variation
+			isDefault
+			relationship: 0718737c-49a9-4910-8a30-a9c96d80a643
+			defaultHierarchy: LocalDateTable_87db58a6-f66b-4a0a-9010-5ca0afe2c3dd.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column ShipDate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 005e9520-b827-4a18-a777-4532d6d720c5
+		summarizeBy: none
+		sourceColumn: ShipDate
+
+		variation Variation
+			isDefault
+			relationship: 2be683ad-21c3-4970-a811-3039fe5cfbaf
+			defaultHierarchy: LocalDateTable_49844c98-bce2-4cc8-8030-1d4313424475.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column CustomerKey
+		dataType: int64
+		formatString: 0
+		lineageTag: e1c8d85e-5423-4c01-9c2b-47d13d89db8b
+		summarizeBy: count
+		sourceColumn: CustomerKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column RegionKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 7d996499-234c-4bdc-97d1-e2852e757ce7
+		summarizeBy: count
+		sourceColumn: RegionKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Unit Cost'
+		dataType: double
+		lineageTag: 81c08dea-157f-4f38-a144-3e1c321accca
+		summarizeBy: sum
+		sourceColumn: Unit Cost
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column '% Discount'
+		dataType: int64
+		formatString: 0
+		lineageTag: fea6c05d-bca1-4729-bbf6-b9c0c569bebd
+		summarizeBy: sum
+		sourceColumn: % Discount
+
+		annotation SummarizationSetBy = Automatic
+
+	partition FactTable_Transaction = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("E:\Documents\2. My Learning Space\02. Certifications\PL-300\Exercise\HPN-Dashoard-Project\data\raw\FactTable.csv"),[Delimiter=",", Columns=15, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"SalesDetailsKey", Int64.Type}, {"SalesHeaderKey", Int64.Type}, {"SalesOrderNumber", type text}, {"ProductKey", Int64.Type}, {"ProductSubcategoryKey", Int64.Type}, {"OrderQuantity", Int64.Type}, {"UnitPrice", type number}, {"ExtendedAmount", type number}, {"OrderDate", type date}, {"DueDate", type date}, {"ShipDate", type date}, {"CustomerKey", Int64.Type}, {"RegionKey", Int64.Type}, {"Unit Cost", type number}, {"% Discount", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

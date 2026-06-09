@@ -1,0 +1,30 @@
+relationship 94db8e71-1d4f-49d2-bf79-45ac30c74160
+	joinOnDateBehavior: datePartOnly
+	fromColumn: FactTable_Transaction.OrderDate
+	toColumn: LocalDateTable_1ed1a33c-bb1b-487b-8150-b56563c23a73.Date
+
+relationship 0718737c-49a9-4910-8a30-a9c96d80a643
+	joinOnDateBehavior: datePartOnly
+	fromColumn: FactTable_Transaction.DueDate
+	toColumn: LocalDateTable_87db58a6-f66b-4a0a-9010-5ca0afe2c3dd.Date
+
+relationship 2be683ad-21c3-4970-a811-3039fe5cfbaf
+	joinOnDateBehavior: datePartOnly
+	fromColumn: FactTable_Transaction.ShipDate
+	toColumn: LocalDateTable_49844c98-bce2-4cc8-8030-1d4313424475.Date
+
+relationship 85944405-d0b2-4047-9720-7b3c7fc36f26
+	joinOnDateBehavior: datePartOnly
+	fromColumn: FactTable_Returns.ReturnDate
+	toColumn: LocalDateTable_7d4854ae-aecc-4597-a4a1-06c8a7290588.Date
+
+relationship 6af5f3c3-73a2-429e-a01b-4ffac9ae32d9
+	joinOnDateBehavior: datePartOnly
+	fromColumn: FactTable_Returns.OrderDate
+	toColumn: LocalDateTable_63f470bd-71e1-491f-b06b-a1dc8e0d3bc7.Date
+
+relationship 23f21fd1-bae1-40d0-880b-a3a77d820638
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'FactTable_Product Cost'.Date
+	toColumn: LocalDateTable_761d57e4-031b-4f6a-9e35-9c5ea88debf1.Date
+

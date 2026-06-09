@@ -1,0 +1,78 @@
+table 'FactTable_Product Cost'
+	lineageTag: cd3520fb-108f-48d8-906f-891059a64192
+
+	column Year
+		dataType: int64
+		formatString: 0
+		lineageTag: f3412c94-11da-4163-a6dc-f4cc046f38a5
+		summarizeBy: sum
+		sourceColumn: Year
+
+		annotation SummarizationSetBy = Automatic
+
+	column MonthNo
+		dataType: int64
+		formatString: 0
+		lineageTag: 3ceef4a0-ffe7-4137-8397-a92166101cf0
+		summarizeBy: sum
+		sourceColumn: MonthNo
+
+		annotation SummarizationSetBy = Automatic
+
+	column CountryCode
+		dataType: string
+		lineageTag: e2fb1ed3-0202-4735-a977-ced2b7253be6
+		summarizeBy: none
+		sourceColumn: CountryCode
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProductKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 04d30d6f-bd9a-42f9-96e2-48c1b8620264
+		summarizeBy: count
+		sourceColumn: ProductKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column UnitCost
+		dataType: double
+		lineageTag: 4a735f82-c31b-45bd-891a-92784eb502c3
+		summarizeBy: sum
+		sourceColumn: UnitCost
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: dc8f6f31-4d92-49ea-9b3a-fa91186851bc
+		summarizeBy: none
+		sourceColumn: Date
+
+		variation Variation
+			isDefault
+			relationship: 23f21fd1-bae1-40d0-880b-a3a77d820638
+			defaultHierarchy: LocalDateTable_761d57e4-031b-4f6a-9e35-9c5ea88debf1.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition 'FactTable_Product Cost' = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("E:\Documents\2. My Learning Space\02. Certifications\PL-300\Exercise\HPN-Dashoard-Project\data\raw\Product Cost.csv"),[Delimiter=",", Columns=6, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Year", Int64.Type}, {"MonthNo", Int64.Type}, {"CountryCode", type text}, {"ProductKey", Int64.Type}, {"UnitCost", type number}, {"Date", type date}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

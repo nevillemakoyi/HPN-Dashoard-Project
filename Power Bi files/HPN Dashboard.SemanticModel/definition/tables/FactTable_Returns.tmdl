@@ -1,0 +1,103 @@
+table FactTable_Returns
+	lineageTag: bf7e0867-8cbf-4c3f-a20d-32ec4a5e0546
+
+	column ReturnKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 94d160ee-790e-4ae5-b31e-bc32062cc068
+		summarizeBy: count
+		sourceColumn: ReturnKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column ReturnDate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 52c60b2e-d6b0-4a28-8939-8a1712cfc52d
+		summarizeBy: none
+		sourceColumn: ReturnDate
+
+		variation Variation
+			isDefault
+			relationship: 85944405-d0b2-4047-9720-7b3c7fc36f26
+			defaultHierarchy: LocalDateTable_7d4854ae-aecc-4597-a4a1-06c8a7290588.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column OrderDate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: c534f491-fa64-4039-aff4-4852f7c732ce
+		summarizeBy: none
+		sourceColumn: OrderDate
+
+		variation Variation
+			isDefault
+			relationship: 6af5f3c3-73a2-429e-a01b-4ffac9ae32d9
+			defaultHierarchy: LocalDateTable_63f470bd-71e1-491f-b06b-a1dc8e0d3bc7.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column SalesOrderNumber
+		dataType: string
+		lineageTag: d3ec3d7e-84a3-4995-ae8e-764db8442caa
+		summarizeBy: none
+		sourceColumn: SalesOrderNumber
+
+		annotation SummarizationSetBy = Automatic
+
+	column CustomerKey
+		dataType: int64
+		formatString: 0
+		lineageTag: ab7a745e-5486-4f85-a639-d5679f9f1269
+		summarizeBy: count
+		sourceColumn: CustomerKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column ProductKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 2a88f8af-e5f3-4948-a6af-ee13f569ee78
+		summarizeBy: count
+		sourceColumn: ProductKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column ReturnQuantity
+		dataType: int64
+		formatString: 0
+		lineageTag: e3161c42-9c8c-4d83-9ee1-870d68617263
+		summarizeBy: sum
+		sourceColumn: ReturnQuantity
+
+		annotation SummarizationSetBy = Automatic
+
+	column UnitPrice
+		dataType: double
+		lineageTag: 17f32d81-4ded-4753-bfb2-2ccf68e9cdbd
+		summarizeBy: sum
+		sourceColumn: UnitPrice
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition FactTable_Returns = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("E:\Documents\2. My Learning Space\02. Certifications\PL-300\Exercise\HPN-Dashoard-Project\data\raw\Returns.csv"),[Delimiter=",", Columns=8, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"ReturnKey", Int64.Type}, {"ReturnDate", type date}, {"OrderDate", type date}, {"SalesOrderNumber", type text}, {"CustomerKey", Int64.Type}, {"ProductKey", Int64.Type}, {"ReturnQuantity", Int64.Type}, {"UnitPrice", type number}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

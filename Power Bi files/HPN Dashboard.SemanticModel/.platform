@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "HPN Dashboard"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "a2135400-a191-49a2-8b63-8e96970c745f"
+  }
+}
