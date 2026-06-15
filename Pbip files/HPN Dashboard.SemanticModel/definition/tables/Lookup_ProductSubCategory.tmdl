@@ -1,0 +1,39 @@
+table Lookup_ProductSubCategory
+	lineageTag: 30269b31-658d-4ffa-8376-c7497b1591c7
+
+	column 'SubCategory ID'
+		dataType: int64
+		formatString: 0
+		lineageTag: a7523e89-1d53-4348-9534-8bfd195856fa
+		summarizeBy: count
+		sourceColumn: SubCategory ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column SubcategoryName
+		dataType: string
+		lineageTag: bcbe67d2-5bab-4dcc-a578-c6f04d17e5c2
+		summarizeBy: none
+		sourceColumn: SubcategoryName
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Lookup_ProductSubCategory = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("E:\Documents\2. My Learning Space\02. Certifications\PL-300\Exercise\HPN-Dashoard-Project\data\raw\Products.csv"),[Delimiter=",", Columns=7, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"ProductKey", Int64.Type}, {"ProductSubcategoryKey", Int64.Type}, {"ProductName", type text}, {"Size", type text}, {"Detail", type text}, {"SubcategoryName", type text}, {"CategoryName", type text}}),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Changed Type",{"SubcategoryName"}),
+				    #"Removed Duplicates" = Table.Distinct(#"Removed Other Columns"),
+				    #"Added Index" = Table.AddIndexColumn(#"Removed Duplicates", "Index", 0, 1, Int64.Type),
+				    #"Renamed Columns" = Table.RenameColumns(#"Added Index",{{"Index", "SubCategory ID"}}),
+				    #"Reordered Columns" = Table.ReorderColumns(#"Renamed Columns",{"SubCategory ID", "SubcategoryName"})
+				in
+				    #"Reordered Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

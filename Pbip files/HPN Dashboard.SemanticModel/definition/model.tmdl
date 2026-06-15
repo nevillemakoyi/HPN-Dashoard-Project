@@ -8,7 +8,7 @@ model Model
 
 annotation __PBI_TimeIntelligenceEnabled = 1
 
-annotation PBI_QueryOrder = ["FactTable_Transaction","FactTable_Returns","FactTable_Product Cost","Lookup_Products","Lookup_Customers"]
+annotation PBI_QueryOrder = ["FactTable_Transaction","FactTable_Returns","FactTable_Product Cost","Lookup_Customers","Lookup_Products","Lookup_ProductCategory","Lookup_ProductSubCategory"]
 
 annotation PBI_ProTooling = ["DevMode"]
 
@@ -24,6 +24,8 @@ ref table 'FactTable_Product Cost'
 ref table LocalDateTable_761d57e4-031b-4f6a-9e35-9c5ea88debf1
 ref table Lookup_Products
 ref table Lookup_Customers
+ref table Lookup_ProductCategory
+ref table Lookup_ProductSubCategory
 
 ref cultureInfo en-US
 
