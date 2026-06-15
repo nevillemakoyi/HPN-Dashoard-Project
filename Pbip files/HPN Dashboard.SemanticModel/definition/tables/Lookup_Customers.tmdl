@@ -1,0 +1,143 @@
+table Lookup_Customers
+	lineageTag: 1ed0cf78-bdc5-4957-8b7d-ced3a881290a
+
+	column CustomerKey
+		dataType: int64
+		formatString: 0
+		lineageTag: ac1e94be-fb04-4889-8ff1-c0f066b8aeaa
+		summarizeBy: count
+		sourceColumn: CustomerKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column GeographyKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 771ee93b-de99-4ce2-9b72-feb7b5e12168
+		summarizeBy: count
+		sourceColumn: GeographyKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column BusinessType
+		dataType: string
+		lineageTag: fed5d9ac-0eb5-4e63-a035-70ed163de6a7
+		summarizeBy: none
+		sourceColumn: BusinessType
+
+		annotation SummarizationSetBy = Automatic
+
+	column Customer
+		dataType: string
+		lineageTag: c00d8f70-c847-4022-a114-6c97621a6537
+		summarizeBy: none
+		sourceColumn: Customer
+
+		annotation SummarizationSetBy = Automatic
+
+	column NumberEmployees
+		dataType: int64
+		formatString: 0
+		lineageTag: cdf4d4a4-7b01-481c-8396-12305bbdabb7
+		summarizeBy: sum
+		sourceColumn: NumberEmployees
+
+		annotation SummarizationSetBy = Automatic
+
+	column AnnualRevenue
+		dataType: int64
+		formatString: 0
+		lineageTag: c3d43e7e-ca15-4a71-a9e1-b50d94f2ffdc
+		summarizeBy: sum
+		sourceColumn: AnnualRevenue
+
+		annotation SummarizationSetBy = Automatic
+
+	column YearOpened
+		dataType: int64
+		formatString: 0
+		lineageTag: bf0aba02-2bc4-41b4-9f19-d8ad82028451
+		summarizeBy: sum
+		sourceColumn: YearOpened
+
+		annotation SummarizationSetBy = Automatic
+
+	column CityName
+		dataType: string
+		lineageTag: 2741ae6d-a1c6-448a-ba89-21963dd7b0bc
+		summarizeBy: none
+		sourceColumn: CityName
+
+		annotation SummarizationSetBy = Automatic
+
+	column StateCode
+		dataType: string
+		lineageTag: 3fe34efe-98af-4911-8518-81b1772e1619
+		summarizeBy: none
+		sourceColumn: StateCode
+
+		annotation SummarizationSetBy = Automatic
+
+	column StateName
+		dataType: string
+		lineageTag: 8d4bbe7a-0d5b-48da-8e5c-37a1ac26fc43
+		summarizeBy: none
+		sourceColumn: StateName
+
+		annotation SummarizationSetBy = Automatic
+
+	column CountryCode
+		dataType: string
+		lineageTag: af7f1d11-e85e-4c55-8353-e8fc5871140d
+		summarizeBy: none
+		sourceColumn: CountryCode
+
+		annotation SummarizationSetBy = Automatic
+
+	column CountryName
+		dataType: string
+		lineageTag: 506b4376-f474-4f2d-ade9-29a70e32c756
+		summarizeBy: none
+		sourceColumn: CountryName
+
+		annotation SummarizationSetBy = Automatic
+
+	column RegionKey
+		dataType: int64
+		formatString: 0
+		lineageTag: cf43c94e-30ee-4330-9495-b801407f4358
+		summarizeBy: count
+		sourceColumn: RegionKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Region.1'
+		dataType: string
+		lineageTag: e6fa2a17-86f0-4ddb-aa44-07c369a679d0
+		summarizeBy: none
+		sourceColumn: Region.1
+
+		annotation SummarizationSetBy = Automatic
+
+	column Continent
+		dataType: string
+		lineageTag: 50727d54-fd86-45f2-ac13-2efd81a38f6e
+		summarizeBy: none
+		sourceColumn: Continent
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Lookup_Customers = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("E:\Documents\2. My Learning Space\02. Certifications\PL-300\Exercise\HPN-Dashoard-Project\data\raw\Customers.csv"),[Delimiter=",", Columns=15, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"CustomerKey", Int64.Type}, {"GeographyKey", Int64.Type}, {"BusinessType", type text}, {"Customer", type text}, {"NumberEmployees", Int64.Type}, {"AnnualRevenue", Int64.Type}, {"YearOpened", Int64.Type}, {"CityName", type text}, {"StateCode", type text}, {"StateName", type text}, {"CountryCode", type text}, {"CountryName", type text}, {"RegionKey", Int64.Type}, {"Region.1", type text}, {"Continent", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

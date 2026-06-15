@@ -45,6 +45,32 @@
             "width": 234
           },
           "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 852,
+            "y": 0
+          },
+          "nodeIndex": "Lookup_Customers",
+          "nodeLineageTag": "1ed0cf78-bdc5-4957-8b7d-ced3a881290a",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1136,
+            "y": 26
+          },
+          "nodeIndex": "Lookup_Products",
+          "nodeLineageTag": "ecfa0b92-afe4-4074-a10d-10b4789bb6d5",
+          "size": {
+            "height": 248,
+            "width": 234
+          },
+          "zIndex": 0
         }
       ],
       "name": "All tables",
